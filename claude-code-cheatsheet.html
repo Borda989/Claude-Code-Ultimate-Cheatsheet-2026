@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code — The Ultimate Cheatsheet</title>
+
+<!-- SEO -->
+<meta name="description" content="Every Claude Code command on one page. 130+ slash commands, keyboard shortcuts, CLI flags, Vim bindings & more. Searchable, filterable, with examples. By Alessandro Bordignon.">
+<meta name="author" content="Alessandro Bordignon">
+<meta name="keywords" content="Claude Code, cheatsheet, commands, shortcuts, CLI, Anthropic, AI coding, reference">
+
+<!-- Open Graph (Facebook, LinkedIn, Discord, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Claude Code — The Ultimate Cheatsheet">
+<meta property="og:description" content="Every command. One page. 130+ slash commands, keyboard shortcuts, CLI flags, Vim bindings & hidden tricks — all searchable with real examples.">
+<meta property="og:url" content="https://alexborda89.github.io/claude-code-cheatsheet/">
+<meta property="og:site_name" content="Claude Code Cheatsheet">
+<meta property="og:image" content="https://alexborda89.github.io/claude-code-cheatsheet/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Claude Code — The Ultimate Cheatsheet: Every command on one page">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@AlexBorda89">
+<meta name="twitter:creator" content="@AlexBorda89">
+<meta name="twitter:title" content="Claude Code — The Ultimate Cheatsheet">
+<meta name="twitter:description" content="Every command. One page. 130+ slash commands, shortcuts, CLI flags & Vim bindings — searchable with real examples.">
+<meta name="twitter:image" content="https://alexborda89.github.io/claude-code-cheatsheet/og-image.png">
+<meta name="twitter:image:alt" content="Claude Code — The Ultimate Cheatsheet: Every command on one page">
+
+<!-- Favicon (Claude orange) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://alexborda89.github.io/claude-code-cheatsheet/">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root {
+    --claude-orange: #E8734A;
+    --claude-peach: #F4A27A;
+    --claude-cream: #FAE8D4;
+    --claude-dark: #1A1A2E;
+    --claude-darker: #0F0F1A;
+    --claude-card: #1E1E35;
+    --claude-card-hover: #252545;
+    --claude-border: rgba(232,115,74,0.15);
+    --claude-glow: rgba(232,115,74,0.3);
+    --text-primary: #F0EDE8;
+    --text-secondary: #A8A4B8;
+    --text-dim: #6B6780;
+    --green: #4AE88F;
+    --blue: #4A9DE8;
+    --purple: #9B6AE8;
+    --pink: #E84A9D;
+    --yellow: #E8C94A;
+    --cyan: #4AE8D4;
+    --red: #E84A4A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--claude-orange) var(--claude-darker);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--claude-darker);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ─── Animated Background ─── */
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(232,115,74,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,115,74,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 20s linear infinite;
+  }
+  @keyframes gridDrift { to { background-position: 60px 60px; } }
+
+  .bg-orbs {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15;
+    animation: orbFloat 15s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 500px; height: 500px; background: var(--claude-orange); top: -10%; left: -5%; }
+  .orb-2 { width: 400px; height: 400px; background: var(--purple); bottom: -10%; right: -5%; animation-delay: -5s; }
+  .orb-3 { width: 300px; height: 300px; background: var(--blue); top: 40%; left: 50%; animation-delay: -10s; }
+  @keyframes orbFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(10px, -10px) scale(1.05); }
+  }
+
+  /* ─── Layout ─── */
+  .container { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+  /* ─── Hero ─── */
+  .hero { text-align: center; padding: 80px 0 50px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,115,74,0.1); border: 1px solid var(--claude-border);
+    padding: 6px 16px; border-radius: 100px; font-size: 13px;
+    color: var(--claude-peach); margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    animation: fadeInUp 0.6s ease both;
+  }
+  .hero-badge .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,232,143,0.4)} 50%{opacity:0.8;box-shadow:0 0 0 8px rgba(74,232,143,0)} }
+  .hero h1 { font-size: clamp(42px,6vw,72px); font-weight: 900; line-height: 1.05; margin-bottom: 16px; animation: fadeInUp 0.6s 0.1s ease both; }
+  .hero h1 .gradient { background: linear-gradient(135deg, var(--claude-orange), var(--claude-peach), var(--yellow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero h1 .code-cursor { display: inline-block; width: 4px; height: 0.8em; background: var(--claude-orange); margin-left: 4px; animation: blink 1s step-end infinite; vertical-align: baseline; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero p { font-size: 18px; color: var(--text-secondary); max-width: 640px; margin: 0 auto 32px; animation: fadeInUp 0.6s 0.2s ease both; }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  .stats-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 48px; animation: fadeInUp 0.6s 0.3s ease both; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, var(--claude-orange), var(--claude-peach)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ─── Toolbar ─── */
+  .toolbar {
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    margin-bottom: 32px; position: sticky; top: 0; z-index: 100;
+    background: rgba(15,15,26,0.85); backdrop-filter: blur(20px);
+    padding: 16px 0; border-bottom: 1px solid var(--claude-border);
+  }
+  .search-box { flex: 1; min-width: 200px; position: relative; }
+  .search-box input {
+    width: 100%; padding: 12px 16px 12px 44px;
+    background: var(--claude-card); border: 1px solid var(--claude-border);
+    border-radius: 12px; color: var(--text-primary); font-size: 15px;
+    font-family: 'JetBrains Mono', monospace; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-box input:focus { border-color: var(--claude-orange); box-shadow: 0 0 0 3px rgba(232,115,74,0.15); }
+  .search-box input::placeholder { color: var(--text-dim); }
+  .search-box .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 18px; }
+  .search-box .search-count { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+  .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    padding: 8px 14px; border-radius: 100px; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--claude-border); background: var(--claude-card);
+    color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+    user-select: none; white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--claude-orange); color: var(--text-primary); }
+  .chip.active { background: rgba(232,115,74,0.15); border-color: var(--claude-orange); color: var(--claude-orange); font-weight: 600; }
+  .chip .chip-count { display: inline-block; background: rgba(232,115,74,0.2); padding: 1px 6px; border-radius: 100px; margin-left: 4px; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+
+  /* ─── Sections ─── */
+  .section { margin-bottom: 48px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--claude-border); }
+  .section-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .section-title { font-size: 22px; font-weight: 700; }
+  .section-count { font-size: 13px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; margin-left: auto; }
+
+  /* ─── Cards Grid ─── */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+
+  .card {
+    background: var(--claude-card); border: 1px solid var(--claude-border);
+    border-radius: 14px; padding: 16px 18px; transition: all 0.25s ease;
+    cursor: pointer; position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: linear-gradient(90deg, transparent, var(--claude-orange), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .card:hover { border-color: rgba(232,115,74,0.3); background: var(--claude-card-hover); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+  .card:hover::before { opacity: 1; }
+  .card.expanded { border-color: var(--claude-orange); background: var(--claude-card-hover); }
+  .card.expanded::before { opacity: 1; }
+
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .card-cmd { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 14px; color: var(--claude-peach); word-break: break-all; }
+  .card-tag { font-size: 10px; padding: 2px 8px; border-radius: 100px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0; }
+  .tag-slash { background: rgba(74,157,232,0.15); color: var(--blue); }
+  .tag-key { background: rgba(155,106,232,0.15); color: var(--purple); }
+  .tag-flag { background: rgba(74,232,143,0.15); color: var(--green); }
+  .tag-cli { background: rgba(232,201,74,0.15); color: var(--yellow); }
+  .tag-vim { background: rgba(232,74,157,0.15); color: var(--pink); }
+  .tag-prefix { background: rgba(74,232,212,0.15); color: var(--cyan); }
+
+  .card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .card-expand-hint { font-size: 11px; color: var(--text-dim); margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+  .card-expand-hint .arrow { transition: transform 0.2s; display: inline-block; }
+  .card.expanded .card-expand-hint .arrow { transform: rotate(90deg); }
+
+  /* ─── Detail Panel ─── */
+  .card-detail {
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease, opacity 0.3s ease;
+    opacity: 0; padding-top: 0;
+  }
+  .card.expanded .card-detail { max-height: 600px; opacity: 1; padding-top: 14px; }
+
+  .detail-section { margin-bottom: 10px; }
+  .detail-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--claude-orange); margin-bottom: 4px;
+  }
+  .detail-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .detail-code {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(232,115,74,0.1);
+    border-radius: 8px; padding: 10px 14px; font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; color: var(--claude-cream); margin-top: 4px;
+    overflow-x: auto; white-space: pre; line-height: 1.6;
+  }
+  .detail-tip {
+    background: rgba(74,232,143,0.06); border: 1px solid rgba(74,232,143,0.15);
+    border-radius: 8px; padding: 8px 12px; font-size: 12px;
+    color: var(--green); margin-top: 6px; line-height: 1.5;
+  }
+  .detail-divider { height: 1px; background: var(--claude-border); margin: 12px 0; }
+
+  /* ─── Footer ─── */
+  .footer { text-align: center; padding: 48px 0; border-top: 1px solid var(--claude-border); color: var(--text-dim); font-size: 13px; }
+  .footer a { color: var(--claude-peach); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer .heart { color: var(--claude-orange); }
+
+  .scroll-top {
+    position: fixed; bottom: 24px; right: 24px; z-index: 200;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--claude-orange); color: #fff; border: none;
+    font-size: 20px; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(232,115,74,0.4);
+    opacity: 0; transform: translateY(20px);
+    transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
+  }
+  .scroll-top.visible { opacity: 1; transform: translateY(0); }
+  .scroll-top:hover { transform: translateY(-2px) scale(1.05); }
+
+  .tip-bar {
+    background: rgba(232,115,74,0.08); border: 1px solid var(--claude-border);
+    border-radius: 12px; padding: 12px 20px; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--text-secondary);
+    animation: fadeInUp 0.6s 0.4s ease both;
+  }
+  .tip-bar kbd {
+    background: var(--claude-card); border: 1px solid var(--claude-border);
+    padding: 2px 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--claude-peach);
+  }
+
+  .no-results { text-align: center; padding: 64px 24px; color: var(--text-dim); }
+  .no-results .emoji { font-size: 48px; margin-bottom: 16px; }
+  .no-results p { font-size: 16px; }
+  .hidden { display: none !important; }
+
+  @media (max-width: 768px) {
+    .hero { padding: 48px 0 32px; }
+    .stats-row { gap: 20px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .toolbar { flex-direction: column; }
+    .filter-chips { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+
+<div class="container">
+  <header class="hero">
+    <div class="hero-badge"><span class="pulse"></span> Claude Code 2026</div>
+    <h1><span class="gradient">Every Command.</span><br>One Page<span class="code-cursor"></span></h1>
+    <p>The ultimate cheatsheet for every slash command, keyboard shortcut, CLI flag, and hidden trick in Claude Code. Click any card to see detailed usage and examples.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num" id="totalCount">0</div><div class="stat-label">Total Commands</div></div>
+      <div class="stat"><div class="stat-num" id="slashCount">0</div><div class="stat-label">Slash Commands</div></div>
+      <div class="stat"><div class="stat-num" id="keyCount">0</div><div class="stat-label">Shortcuts</div></div>
+      <div class="stat"><div class="stat-num" id="flagCount">0</div><div class="stat-label">CLI Flags</div></div>
+    </div>
+  </header>
+
+  <div class="tip-bar">
+    <span>&#9889;</span>
+    <span>Press <kbd>/</kbd> to search &middot; Click any card to expand details &middot; <kbd>Esc</kbd> to clear</span>
+  </div>
+
+  <div class="toolbar" id="toolbar">
+    <div class="search-box">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" id="searchInput" placeholder="Search commands, shortcuts, flags..." autocomplete="off" />
+      <span class="search-count" id="searchCount"></span>
+    </div>
+    <div class="filter-chips" id="filterChips"></div>
+  </div>
+
+  <main id="cardsContainer"></main>
+
+  <div class="no-results hidden" id="noResults">
+    <div class="emoji">&#129300;</div>
+    <p>No commands match your search. Try a different term!</p>
+  </div>
+
+  <footer class="footer">
+    <p>Made with <span class="heart">&#9829;</span> by <a href="https://x.com/AlexBorda89" target="_blank" style="font-weight:600;">Alessandro Bordignon</a> &middot; <a href="https://x.com/AlexBorda89" target="_blank" style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> @AlexBorda89</a> &middot; <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank">Official Docs</a></p>
+    <p style="margin-top:6px;">Last updated March 2026 &middot; Share freely!</p>
+  </footer>
+</div>
+
+<button class="scroll-top" id="scrollTop" title="Back to top">&#8593;</button>
+
+<script>
+const commands = [
+  // ══════════ SLASH COMMANDS: Account & Auth ══════════
+  { cmd: "/login", desc: "Sign in to your Anthropic account", cat: "slash", section: "Account & Auth", icon: "&#128274;",
+    syntax: "/login",
+    detail: "Authenticates you with your Anthropic account. Also available from the CLI as claude auth login.",
+    example: "/login",
+    tip: "Use claude auth login --email you@company.com --sso from the CLI for SSO-based authentication." },
+
+  { cmd: "/logout", desc: "Sign out from your Anthropic account", cat: "slash", section: "Account & Auth", icon: "&#128274;",
+    syntax: "/logout",
+    detail: "Logs you out and clears your stored credentials. Also available as claude auth logout from the CLI.",
+    example: "/logout",
+    tip: null },
+
+  { cmd: "/status", desc: "Show version, model, account, and connectivity info", cat: "slash", section: "Account & Auth", icon: "&#128274;",
+    syntax: "/status",
+    detail: "Displays your current authentication status, which model you're using, Claude Code version, and connection health.",
+    example: "/status",
+    tip: "From the CLI, use claude auth status --text for a human-readable output." },
+
+  { cmd: "/usage", desc: "Show plan usage limits and rate limit status", cat: "slash", section: "Account & Auth", icon: "&#128274;",
+    syntax: "/usage",
+    detail: "Shows how much of your plan's API quota you've consumed, including token counts and rate limit status.",
+    example: "/usage",
+    tip: null },
+
+  { cmd: "/extra-usage", desc: "Configure extra usage when rate limits are hit", cat: "slash", section: "Account & Auth", icon: "&#128274;",
+    syntax: "/extra-usage",
+    detail: "Lets you configure whether to continue working (at additional cost) when your plan's standard rate limits are reached.",
+    example: "/extra-usage",
+    tip: null },
+
+  { cmd: "/upgrade", desc: "Open upgrade page to switch to a higher plan tier", cat: "slash", section: "Account & Auth", icon: "&#128274;",
+    syntax: "/upgrade",
+    detail: "Opens the Anthropic subscription management page where you can upgrade your Claude plan.",
+    example: "/upgrade",
+    tip: null },
+
+  { cmd: "/privacy-settings", desc: "View and update privacy settings (Pro/Max plans)", cat: "slash", section: "Account & Auth", icon: "&#128274;",
+    syntax: "/privacy-settings",
+    detail: "Configure data retention and privacy options for your account. Available on Pro and Max plans only.",
+    example: "/privacy-settings",
+    tip: null },
+
+  // ══════════ SLASH COMMANDS: Session Management ══════════
+  { cmd: "/resume", desc: "Resume a conversation by ID or name", cat: "slash", section: "Session Management", icon: "&#128257;",
+    syntax: "/resume [session-id or name]",
+    detail: "Resumes a previous session. If you provide a name or ID it loads that session directly. Without arguments, it shows an interactive session picker.",
+    example: "/resume auth-refactor",
+    tip: "Name your sessions with /rename so you can easily resume them later." },
+
+  { cmd: "/continue", desc: "Alias for /resume — pick up where you left off", cat: "slash", section: "Session Management", icon: "&#128257;",
+    syntax: "/continue",
+    detail: "Continues the most recent conversation in the current directory. Equivalent to claude --continue from the CLI.",
+    example: "/continue",
+    tip: "From the CLI, use claude -c for the same effect." },
+
+  { cmd: "/fork", desc: "Fork the current conversation at this point", cat: "slash", section: "Session Management", icon: "&#128257;",
+    syntax: "/fork [name]",
+    detail: "Creates a new session that branches off from the current conversation at this exact point. Useful for exploring different approaches without losing your current work.",
+    example: "/fork alternative-approach",
+    tip: null },
+
+  { cmd: "/rename", desc: "Rename current session for easy identification", cat: "slash", section: "Session Management", icon: "&#128257;",
+    syntax: "/rename [new-name]",
+    detail: "Gives your current session a memorable name that appears in the session picker and terminal title. Auto-generates a name if none is provided.",
+    example: "/rename api-refactor-branch",
+    tip: "Named sessions are much easier to find with /resume later." },
+
+  { cmd: "/clear", desc: "Clear conversation history and free up context", cat: "slash", section: "Session Management", icon: "&#128257;",
+    syntax: "/clear",
+    detail: "Resets the conversation, clearing all history and freeing up the entire context window. Starts a fresh session in the same directory.",
+    example: "/clear",
+    tip: null },
+
+  { cmd: "/new", desc: "Start a brand new conversation (alias for /clear)", cat: "slash", section: "Session Management", icon: "&#128257;",
+    syntax: "/new",
+    detail: "Identical to /clear — starts a completely fresh session with empty context.",
+    example: "/new",
+    tip: null },
+
+  { cmd: "/exit", desc: "Exit Claude Code CLI", cat: "slash", section: "Session Management", icon: "&#128257;",
+    syntax: "/exit",
+    detail: "Cleanly exits the Claude Code session. Your session is saved and can be resumed later.",
+    example: "/exit",
+    tip: "You can also press Ctrl+D to exit." },
+
+  { cmd: "/quit", desc: "Alias for /exit", cat: "slash", section: "Session Management", icon: "&#128257;",
+    syntax: "/quit",
+    detail: "Same as /exit — exits the current session.",
+    example: "/quit",
+    tip: null },
+
+  // ══════════ SLASH COMMANDS: Code & Workflow ══════════
+  { cmd: "/security-review", desc: "Analyze pending changes for security vulnerabilities", cat: "slash", section: "Code & Workflow", icon: "&#128187;",
+    syntax: "/security-review",
+    detail: "Runs a security analysis on your current uncommitted git diff. Checks for common vulnerabilities, exposed secrets, injection risks, and more.",
+    example: "/security-review",
+    tip: "Run this before committing to catch security issues early." },
+
+  { cmd: "/diff", desc: "Open interactive diff viewer for uncommitted changes", cat: "slash", section: "Code & Workflow", icon: "&#128187;",
+    syntax: "/diff",
+    detail: "Shows a visual diff of your current uncommitted changes. Also shows per-turn diffs so you can see what Claude changed in each step.",
+    example: "/diff",
+    tip: null },
+
+  { cmd: "/rewind", desc: "Rewind code/conversation to a previous checkpoint", cat: "slash", section: "Code & Workflow", icon: "&#128187;",
+    syntax: "/rewind",
+    detail: "Lets you undo Claude's code changes back to a previous checkpoint, or summarize the conversation from a selected message. Restores your code to an earlier state.",
+    example: "/rewind",
+    tip: "You can also press Esc+Esc as a keyboard shortcut for this." },
+
+  { cmd: "/checkpoint", desc: "Alias for /rewind — manage checkpoints", cat: "slash", section: "Code & Workflow", icon: "&#128187;",
+    syntax: "/checkpoint",
+    detail: "Same as /rewind. Lets you save and restore code states during a session.",
+    example: "/checkpoint",
+    tip: null },
+
+  { cmd: "/plan", desc: "Enter plan mode — Claude thinks before it acts", cat: "slash", section: "Code & Workflow", icon: "&#128187;",
+    syntax: "/plan [description]",
+    detail: "Switches to Plan Mode where Claude analyzes your request and shows what it intends to do before executing any changes. You can review and approve the plan first.",
+    example: "/plan refactor the authentication module",
+    tip: "Great for risky refactors — review the plan before Claude touches any code." },
+
+  { cmd: "/pr-comments", desc: "Fetch and display comments from a GitHub PR", cat: "slash", section: "Code & Workflow", icon: "&#128187;",
+    syntax: "/pr-comments [PR-number]",
+    detail: "Pulls all discussion comments from a GitHub pull request so you can review feedback without leaving Claude Code. Requires the gh CLI to be installed and authenticated.",
+    example: "/pr-comments 123",
+    tip: "Requires gh CLI installed and authenticated with GitHub." },
+
+  // ══════════ SLASH COMMANDS: Configuration ══════════
+  { cmd: "/config", desc: "Open Settings interface", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/config",
+    detail: "Opens an interactive settings menu where you can adjust theme, model, output style, and other preferences.",
+    example: "/config",
+    tip: null },
+
+  { cmd: "/settings", desc: "Alias for /config", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/settings",
+    detail: "Same as /config — opens the settings interface.",
+    example: "/settings",
+    tip: null },
+
+  { cmd: "/model", desc: "Select or change the AI model", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/model [model-name]",
+    detail: "Switch between available Claude models. Without arguments, opens an interactive picker. You can use arrow keys to adjust the effort level.",
+    example: "/model claude-sonnet-4-6",
+    tip: "You can use shorthand aliases: sonnet or opus." },
+
+  { cmd: "/effort", desc: "Set effort level: low, medium, high, max, or auto", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/effort [level]",
+    detail: "Controls how deeply Claude processes your request. Higher effort = more thorough but slower and more expensive. Max effort is only available with Opus.",
+    example: "/effort high",
+    tip: "Use /effort low for quick questions, /effort max for complex architecture decisions." },
+
+  { cmd: "/fast", desc: "Toggle fast mode on or off", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/fast [on|off]",
+    detail: "Enables or disables fast mode for quicker responses at lower cost. When on, Claude prioritizes speed over thoroughness.",
+    example: "/fast on",
+    tip: null },
+
+  { cmd: "/vim", desc: "Toggle between Vim and Normal editing modes", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/vim",
+    detail: "Enables or disables Vim-style keybindings for text editing in the prompt. When enabled, you get full Vim Normal/Insert mode navigation and editing.",
+    example: "/vim",
+    tip: "See the Vim Mode section below for all available Vim commands." },
+
+  { cmd: "/theme", desc: "Change color theme", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/theme",
+    detail: "Opens a theme picker to choose between light, dark, colorblind variants, and ANSI-only themes.",
+    example: "/theme",
+    tip: null },
+
+  { cmd: "/color", desc: "Set prompt bar color", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/color [color|default]",
+    detail: "Changes the color of the prompt bar. Available colors: red, blue, green, yellow, purple, orange, pink, cyan. Use 'default' to reset.",
+    example: "/color purple",
+    tip: "Useful when running multiple Claude Code sessions to tell them apart." },
+
+  { cmd: "/keybindings", desc: "Open or create keybindings config file", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/keybindings",
+    detail: "Opens ~/.claude/keybindings.json in your editor for customization. Changes apply automatically without restart. Set action to null to unbind defaults.",
+    example: "/keybindings",
+    tip: "Use JSON Schema from schemastore.org/claude-code-keybindings.json for editor autocompletion. Ctrl+C and Ctrl+D cannot be rebound." },
+
+  { cmd: "/terminal-setup", desc: "Configure terminal keybindings for Shift+Enter", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/terminal-setup",
+    detail: "Installs terminal-specific key bindings needed for Shift+Enter (multiline) and other shortcuts to work. Required for VS Code, Alacritty, Zed, and Warp terminals.",
+    example: "/terminal-setup",
+    tip: "Not needed for iTerm2, WezTerm, Ghostty, or Kitty — they support Shift+Enter natively." },
+
+  { cmd: "/statusline", desc: "Configure Claude Code status line display", cat: "slash", section: "Configuration", icon: "&#9881;",
+    syntax: "/statusline",
+    detail: "Configures the status line at the bottom of your terminal. Run without arguments to auto-configure for your terminal.",
+    example: "/statusline",
+    tip: null },
+
+  // ══════════ SLASH COMMANDS: Tools & Extensions ══════════
+  { cmd: "/skills", desc: "List all available skills", cat: "slash", section: "Tools & Extensions", icon: "&#128295;",
+    syntax: "/skills",
+    detail: "Shows all available skills including built-in skills, bundled skills, custom user skills, and skills from installed plugins.",
+    example: "/skills",
+    tip: null },
+
+  { cmd: "/agents", desc: "Manage agent/subagent configurations", cat: "slash", section: "Tools & Extensions", icon: "&#128295;",
+    syntax: "/agents",
+    detail: "Lists all configured subagents grouped by source. Also available from the CLI as claude agents.",
+    example: "/agents",
+    tip: null },
+
+  { cmd: "/mcp", desc: "Manage MCP server connections and OAuth", cat: "slash", section: "Tools & Extensions", icon: "&#128295;",
+    syntax: "/mcp",
+    detail: "Configure and manage Model Context Protocol (MCP) servers. MCP lets Claude connect to external tools, databases, and APIs.",
+    example: "/mcp",
+    tip: "Also configurable from CLI: claude mcp add <server-name>" },
+
+  { cmd: "/plugin", desc: "Manage Claude Code plugins", cat: "slash", section: "Tools & Extensions", icon: "&#128295;",
+    syntax: "/plugin",
+    detail: "Install, enable, disable, or manage Claude Code plugins. Plugins can add new skills, commands, and MCP integrations.",
+    example: "/plugin",
+    tip: null },
+
+  { cmd: "/reload-plugins", desc: "Reload all active plugins without restarting", cat: "slash", section: "Tools & Extensions", icon: "&#128295;",
+    syntax: "/reload-plugins",
+    detail: "Hot-reloads all installed plugins so changes take effect immediately in the current session without needing to restart.",
+    example: "/reload-plugins",
+    tip: null },
+
+  { cmd: "/hooks", desc: "View hook configurations for tool events", cat: "slash", section: "Tools & Extensions", icon: "&#128295;",
+    syntax: "/hooks",
+    detail: "Shows all configured automation hooks that run before or after specific tool events (like SessionStart, Bash, Edit, etc.).",
+    example: "/hooks",
+    tip: null },
+
+  { cmd: "/chrome", desc: "Configure Chrome browser integration", cat: "slash", section: "Tools & Extensions", icon: "&#128295;",
+    syntax: "/chrome",
+    detail: "Enable or configure Chrome browser integration so Claude can interact with web pages for testing and automation.",
+    example: "/chrome",
+    tip: "Also available from CLI: claude --chrome" },
+
+  { cmd: "/ide", desc: "Manage IDE integrations and show status", cat: "slash", section: "Tools & Extensions", icon: "&#128295;",
+    syntax: "/ide",
+    detail: "Connect Claude Code to your IDE (VS Code, JetBrains, etc.) for tighter integration with your editor.",
+    example: "/ide",
+    tip: "Also available from CLI: claude --ide" },
+
+  // ══════════ SLASH COMMANDS: Project & Memory ══════════
+  { cmd: "/init", desc: "Initialize project with CLAUDE.md guide", cat: "slash", section: "Project & Memory", icon: "&#128218;",
+    syntax: "/init",
+    detail: "Creates a CLAUDE.md file in your project root with auto-generated documentation about your codebase structure, conventions, and key files.",
+    example: "/init",
+    tip: "Run this once in a new project to give Claude persistent context about your codebase." },
+
+  { cmd: "/memory", desc: "Edit CLAUDE.md memory files", cat: "slash", section: "Project & Memory", icon: "&#128218;",
+    syntax: "/memory",
+    detail: "Opens an editor for your CLAUDE.md memory files. You can enable/disable auto-memory, view entries, and manually add persistent instructions that Claude remembers across sessions.",
+    example: "/memory",
+    tip: "Add project conventions, coding standards, or frequently needed context here." },
+
+  { cmd: "/add-dir", desc: "Add new working directory to current session", cat: "slash", section: "Project & Memory", icon: "&#128218;",
+    syntax: "/add-dir <path>",
+    detail: "Extends Claude's file access to include additional directories. Useful for monorepo setups where you need to work across multiple packages.",
+    example: "/add-dir ../shared-libs",
+    tip: "Each path is validated to ensure it exists as a directory." },
+
+  { cmd: "/context", desc: "Visualize current context usage as colored grid", cat: "slash", section: "Project & Memory", icon: "&#128218;",
+    syntax: "/context",
+    detail: "Displays a visual representation of how much of your context window is consumed. Shows optimization suggestions when running low on space.",
+    example: "/context",
+    tip: "If context is getting full, use /compact to compress conversation history." },
+
+  { cmd: "/compact", desc: "Compact conversation with optional focus instructions", cat: "slash", section: "Project & Memory", icon: "&#128218;",
+    syntax: "/compact [instructions]",
+    detail: "Summarizes and compresses earlier conversation turns to free up context space. Optionally provide focus instructions to prioritize what to keep.",
+    example: "/compact keep the auth module changes",
+    tip: "Claude automatically suggests compacting when context runs low." },
+
+  // ══════════ SLASH COMMANDS: Utilities ══════════
+  { cmd: "/help", desc: "Show help and available commands", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/help",
+    detail: "Displays a full list of all available slash commands, bundled skills, custom skills, and MCP commands.",
+    example: "/help",
+    tip: null },
+
+  { cmd: "/doctor", desc: "Diagnose and verify Claude Code installation", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/doctor",
+    detail: "Runs diagnostic checks on your Claude Code installation, verifying dependencies, configuration, and connectivity.",
+    example: "/doctor",
+    tip: "Run this first when something isn't working as expected." },
+
+  { cmd: "/export", desc: "Export current conversation as plain text", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/export [filename]",
+    detail: "Saves the current conversation to a text file. Useful for archiving sessions or sharing your work with others.",
+    example: "/export session-notes.txt",
+    tip: null },
+
+  { cmd: "/copy", desc: "Copy last assistant response to clipboard", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/copy",
+    detail: "Copies the last response to your clipboard. You can pick individual code blocks or copy the full response.",
+    example: "/copy",
+    tip: null },
+
+  { cmd: "/cost", desc: "Show token usage and cost statistics", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/cost",
+    detail: "Displays detailed token consumption and estimated dollar cost for the current session.",
+    example: "/cost",
+    tip: null },
+
+  { cmd: "/stats", desc: "Visualize daily usage, streaks, and model preferences", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/stats",
+    detail: "Shows a dashboard of your Claude Code usage patterns: daily activity, session history, usage streaks, and which models you use most.",
+    example: "/stats",
+    tip: null },
+
+  { cmd: "/insights", desc: "Generate report analyzing interaction patterns", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/insights",
+    detail: "Analyzes your Claude Code sessions to identify interaction patterns, friction points, and areas for improvement.",
+    example: "/insights",
+    tip: null },
+
+  { cmd: "/btw", desc: "Ask a quick side question without adding to history", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/btw <question>",
+    detail: "Asks a quick ephemeral question that doesn't get added to the conversation history. Great for checking something without polluting context.",
+    example: "/btw what was the config file name again?",
+    tip: "The answer won't consume context window space." },
+
+  { cmd: "/feedback", desc: "Submit feedback about Claude Code", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/feedback [report]",
+    detail: "Opens a feedback form to report issues, suggestions, or praise directly to the Anthropic team.",
+    example: "/feedback",
+    tip: null },
+
+  { cmd: "/bug", desc: "Report a bug (alias for /feedback)", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/bug",
+    detail: "Same as /feedback — specifically for reporting bugs you've encountered.",
+    example: "/bug",
+    tip: null },
+
+  { cmd: "/release-notes", desc: "View full changelog and latest updates", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/release-notes",
+    detail: "Shows the complete changelog with the most recent version's changes displayed first.",
+    example: "/release-notes",
+    tip: null },
+
+  { cmd: "/tasks", desc: "List and manage background tasks", cat: "slash", section: "Utilities", icon: "&#128161;",
+    syntax: "/tasks",
+    detail: "Shows all running and completed background tasks. Lets you manage and monitor ongoing work.",
+    example: "/tasks",
+    tip: null },
+
+  // ══════════ SLASH COMMANDS: Integrations ══════════
+  { cmd: "/install-github-app", desc: "Set up Claude GitHub Actions app for your repo", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/install-github-app",
+    detail: "Walks you through installing the Claude GitHub integration for your repository. Enables PR automation and code review features.",
+    example: "/install-github-app",
+    tip: null },
+
+  { cmd: "/install-slack-app", desc: "Install Claude Slack app and complete OAuth", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/install-slack-app",
+    detail: "Installs the Claude Slack integration and walks you through the OAuth authorization flow.",
+    example: "/install-slack-app",
+    tip: null },
+
+  { cmd: "/desktop", desc: "Continue session in Claude Code Desktop app", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/desktop",
+    detail: "Transfers your current terminal session to the Claude Code Desktop application (macOS and Windows only).",
+    example: "/desktop",
+    tip: null },
+
+  { cmd: "/app", desc: "Alias for /desktop", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/app",
+    detail: "Same as /desktop — opens your session in the desktop app.",
+    example: "/app",
+    tip: null },
+
+  { cmd: "/remote-control", desc: "Make session available for remote control from claude.ai", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/remote-control",
+    detail: "Enables your local terminal session to be controlled remotely from claude.ai in a browser.",
+    example: "/remote-control",
+    tip: "Also available from CLI: claude --remote-control \"My Project\"" },
+
+  { cmd: "/rc", desc: "Alias for /remote-control", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/rc",
+    detail: "Shorthand for /remote-control.",
+    example: "/rc",
+    tip: null },
+
+  { cmd: "/remote-env", desc: "Configure default remote environment for web sessions", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/remote-env",
+    detail: "Configures the default remote execution environment settings used when creating web-based sessions.",
+    example: "/remote-env",
+    tip: null },
+
+  { cmd: "/teleport", desc: "Resume a web session in your local terminal", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/teleport",
+    detail: "Pulls a session running on claude.ai into your local terminal. The web session transfers to your CLI.",
+    example: "/teleport",
+    tip: "Also available from CLI: claude --teleport" },
+
+  { cmd: "/mobile", desc: "Show QR code to download Claude mobile app", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/mobile",
+    detail: "Displays a QR code you can scan with your phone to download the Claude mobile companion app.",
+    example: "/mobile",
+    tip: null },
+
+  { cmd: "/passes", desc: "Share a free week of Claude Code with friends", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/passes",
+    detail: "If eligible, lets you generate and share free week passes for Claude Code with friends and colleagues.",
+    example: "/passes",
+    tip: "Eligibility depends on your plan and usage." },
+
+  { cmd: "/stickers", desc: "Order Claude Code stickers!", cat: "slash", section: "Integrations", icon: "&#128279;",
+    syntax: "/stickers",
+    detail: "Browse and order physical Claude Code themed stickers.",
+    example: "/stickers",
+    tip: null },
+
+  // ══════════ KEYBOARD SHORTCUTS ══════════
+  { cmd: "Ctrl+C", desc: "Cancel current input or generation", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+C",
+    detail: "Standard interrupt signal. Stops whatever Claude is currently doing — cancels generation, input, or running commands.",
+    example: "Press Ctrl+C while Claude is generating a long response to stop it",
+    tip: "Cannot be rebound via /keybindings." },
+
+  { cmd: "Ctrl+D", desc: "Exit Claude Code session (EOF)", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+D",
+    detail: "Sends EOF signal to cleanly exit the Claude Code session. Same as typing /exit.",
+    example: "Press Ctrl+D on an empty prompt to exit",
+    tip: "Cannot be rebound via /keybindings." },
+
+  { cmd: "Ctrl+F", desc: "Kill all background agents (press twice to confirm)", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+F (press twice within 3 seconds)",
+    detail: "Terminates all running background agents. Requires double-press within 3 seconds as a safety confirmation.",
+    example: "Press Ctrl+F twice quickly to stop all background work",
+    tip: null },
+
+  { cmd: "Ctrl+L", desc: "Clear terminal screen (keeps conversation)", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+L",
+    detail: "Clears the visible terminal display but preserves your conversation history and context. Just a visual cleanup.",
+    example: "Press Ctrl+L when your terminal is cluttered",
+    tip: "Different from /clear which resets the actual conversation." },
+
+  { cmd: "Ctrl+O", desc: "Toggle verbose output — see detailed tool usage", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+O",
+    detail: "Toggles verbose mode which shows detailed information about which tools Claude is using and how.",
+    example: "Press Ctrl+O to see exactly what commands Claude is running",
+    tip: null },
+
+  { cmd: "Ctrl+G", desc: "Open prompt in your default text editor", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+G",
+    detail: "Opens the current prompt (or Claude's last response) in your default system text editor for easier editing of longer content.",
+    example: "Press Ctrl+G to compose a complex query in vim/nano/VS Code",
+    tip: "Set your $EDITOR environment variable to control which editor opens." },
+
+  { cmd: "Ctrl+B", desc: "Background running tasks", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+B (press twice for tmux)",
+    detail: "Moves currently running commands to the background. If you're in tmux, press twice since the first Ctrl+B is captured by tmux.",
+    example: "Press Ctrl+B while a long command is running to background it",
+    tip: null },
+
+  { cmd: "Ctrl+T", desc: "Toggle task list visibility in status area", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+T",
+    detail: "Shows or hides the task tracking list in the terminal status area.",
+    example: "Press Ctrl+T to check on your tracked tasks",
+    tip: null },
+
+  { cmd: "Ctrl+R", desc: "Reverse search command history interactively", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+R, then type search term",
+    detail: "Opens an interactive reverse search through your command history. Type a search term and press Ctrl+R again to cycle through matches.",
+    example: "Ctrl+R → type 'npm' → Ctrl+R to cycle → Enter to select",
+    tip: null },
+
+  { cmd: "Ctrl+V / Cmd+V", desc: "Paste image from clipboard", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+V (or Cmd+V on iTerm2, Alt+V on Windows)",
+    detail: "Pastes an image directly from your clipboard into the prompt. Claude can then analyze the screenshot or image.",
+    example: "Take a screenshot, then press Ctrl+V to paste it into Claude",
+    tip: "On iTerm2 use Cmd+V, on Windows terminal use Alt+V." },
+
+  { cmd: "Ctrl+K", desc: "Delete to end of line (stores for pasting)", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+K",
+    detail: "Deletes all text from cursor position to the end of the line. The deleted text is stored and can be pasted back with Ctrl+Y.",
+    example: "Position cursor mid-line, press Ctrl+K to delete the rest",
+    tip: null },
+
+  { cmd: "Ctrl+U", desc: "Delete entire line (stores for pasting)", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+U",
+    detail: "Deletes the entire current input line. The deleted text is stored and can be pasted back with Ctrl+Y.",
+    example: "Press Ctrl+U to clear your current input completely",
+    tip: null },
+
+  { cmd: "Ctrl+Y", desc: "Paste previously deleted text", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+Y",
+    detail: "Pastes back text that was deleted with Ctrl+K or Ctrl+U.",
+    example: "After Ctrl+K, press Ctrl+Y to restore the deleted text",
+    tip: "Press Alt+Y after Ctrl+Y to cycle through deletion history." },
+
+  { cmd: "Ctrl+J", desc: "New line — works in all terminals", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Ctrl+J",
+    detail: "Inserts a newline character for multiline input. This is a universal method that works in every terminal.",
+    example: "Press Ctrl+J to start a new line in your prompt",
+    tip: "Alternative to Shift+Enter for terminals that don't support it." },
+
+  { cmd: "Esc + Esc", desc: "Rewind or summarize conversation (double tap)", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Esc, then Esc again",
+    detail: "Double-pressing Escape opens the rewind interface where you can restore code to a previous state or summarize the conversation from a selected point.",
+    example: "Press Esc twice to open the checkpoint/rewind picker",
+    tip: "Same as typing /rewind." },
+
+  { cmd: "Shift+Tab / Alt+M", desc: "Toggle permission modes: Auto-Accept, Plan, Normal", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Shift+Tab or Alt+M",
+    detail: "Cycles through permission strictness levels. Auto-Accept approves all actions automatically, Plan requires review before execution, Normal prompts for each action.",
+    example: "Press Shift+Tab to switch from Normal to Plan mode",
+    tip: "On macOS, Alt+M requires Option configured as Meta in your terminal." },
+
+  { cmd: "Alt+P / Option+P", desc: "Switch model on the fly", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Option+P (macOS) or Alt+P (Windows/Linux)",
+    detail: "Opens a model picker to switch between Claude models mid-session without restarting.",
+    example: "Press Alt+P to switch from Sonnet to Opus",
+    tip: "On macOS, requires Option set to Meta in terminal settings." },
+
+  { cmd: "Alt+T / Option+T", desc: "Toggle extended thinking mode", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Option+T (macOS) or Alt+T (Windows/Linux)",
+    detail: "Enables or disables extended thinking where Claude takes more time to reason through complex problems before answering.",
+    example: "Press Alt+T before asking a complex architecture question",
+    tip: "May require /terminal-setup first on some terminals." },
+
+  { cmd: "Alt+B / Alt+F", desc: "Move cursor back/forward one word", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Alt+B (back) / Alt+F (forward)",
+    detail: "Jump the cursor backward or forward by one word for faster navigation through your prompt text.",
+    example: "Press Alt+B to skip back one word, Alt+F to skip forward",
+    tip: "On macOS, requires Option configured as Meta: iTerm2 → Settings → Profiles → Keys → Left Option = Esc+." },
+
+  { cmd: "Shift+Enter", desc: "New line in prompt — works natively in modern terminals", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Shift+Enter",
+    detail: "Inserts a new line without submitting. Works natively in iTerm2, WezTerm, Ghostty, and Kitty. Other terminals need /terminal-setup first.",
+    example: "Press Shift+Enter to write multi-line prompts",
+    tip: "Run /terminal-setup if Shift+Enter doesn't work in your terminal." },
+
+  { cmd: "\\ + Enter", desc: "New line — universal escape, works everywhere", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Type \\ then press Enter",
+    detail: "The backslash before Enter acts as a line continuation. This works in every terminal without any configuration.",
+    example: "Type your text, then \\ and Enter for a new line",
+    tip: "Most reliable multiline method across all terminals." },
+
+  { cmd: "Up / Down arrows", desc: "Navigate through command history", cat: "key", section: "Keyboard Shortcuts", icon: "&#9000;",
+    syntax: "Up arrow / Down arrow",
+    detail: "Scroll through your previously typed commands and prompts. Up goes to older entries, Down goes to newer ones.",
+    example: "Press Up to recall your last prompt",
+    tip: null },
+
+  // ══════════ PREFIX SHORTCUTS ══════════
+  { cmd: "/ (slash)", desc: "Access any command or skill — type and filter", cat: "prefix", section: "Prefix Shortcuts", icon: "&#9889;",
+    syntax: "/ at the start of input",
+    detail: "Typing / shows an autocomplete menu of all available commands and skills. Continue typing to filter the list.",
+    example: "Type /he to filter and quickly find /help",
+    tip: "All slash commands and installed skill commands appear here." },
+
+  { cmd: "! (bang)", desc: "Bash mode — run shell commands directly", cat: "prefix", section: "Prefix Shortcuts", icon: "&#9889;",
+    syntax: "! <shell command>",
+    detail: "Executes a shell command directly without Claude interpreting it. The output is added to the session context. Supports Tab autocomplete for commands.",
+    example: "! git status\n! npm test\n! ls -la src/",
+    tip: "Output goes into session context, so Claude can reference it." },
+
+  { cmd: "@ (at)", desc: "File path mention — triggers file autocomplete", cat: "prefix", section: "Prefix Shortcuts", icon: "&#9889;",
+    syntax: "@ in your prompt",
+    detail: "Triggers file path autocomplete. Start typing a path after @ to see file suggestions from your project.",
+    example: "Can you review @src/auth/login.ts",
+    tip: "Great for pointing Claude at specific files to analyze or edit." },
+
+  { cmd: "? (question)", desc: "Show available shortcuts in help/vim mode", cat: "prefix", section: "Prefix Shortcuts", icon: "&#9889;",
+    syntax: "? at start of input",
+    detail: "Shows available shortcuts and help. Works in the help menu and in Vim NORMAL mode.",
+    example: "Type ? to see available quick actions",
+    tip: null },
+
+  // ══════════ CLI FLAGS: Session ══════════
+  { cmd: "--print, -p", desc: "Print response without interactive mode (scripting)", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude -p \"query\"",
+    detail: "Runs Claude in non-interactive print mode: sends the query, prints the response, and exits. Perfect for scripting, CI/CD pipelines, and piping.",
+    example: "claude -p \"explain this function\"\ncat logs.txt | claude -p \"find errors\"",
+    tip: "Combine with --output-format json for structured output in scripts." },
+
+  { cmd: "--continue, -c", desc: "Load most recent conversation in current directory", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude -c",
+    detail: "Automatically loads and continues your most recent session from the current working directory.",
+    example: "claude -c",
+    tip: "Quick way to pick up where you left off after closing the terminal." },
+
+  { cmd: "--resume, -r", desc: "Resume session by ID or name", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude -r \"session-name\" [\"new prompt\"]",
+    detail: "Resumes a specific session identified by its name or ID. Optionally provide a new prompt to continue with.",
+    example: "claude -r \"auth-refactor\" \"finish the PR\"",
+    tip: "Without a name, shows an interactive session picker." },
+
+  { cmd: "--fork-session", desc: "Create new session ID when resuming", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude --resume <id> --fork-session",
+    detail: "When used with --resume, creates a new session ID instead of reusing the original. Lets you branch off into parallel work.",
+    example: "claude --resume abc123 --fork-session",
+    tip: null },
+
+  { cmd: "--session-id", desc: "Use specific session ID for conversation", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude --session-id \"<UUID>\"",
+    detail: "Forces a specific session UUID. Useful for programmatic session management.",
+    example: "claude --session-id \"550e8400-e29b-41d4-a716-446655440000\"",
+    tip: null },
+
+  { cmd: "--name, -n", desc: "Set display name for session", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude -n \"my-feature\"",
+    detail: "Gives the session a human-readable name that appears in the /resume session picker and terminal title.",
+    example: "claude -n \"auth-refactor\"",
+    tip: "Makes sessions easy to find and resume later." },
+
+  { cmd: "--remote", desc: "Create new web session on claude.ai", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude --remote \"prompt\"",
+    detail: "Creates a new session that runs on claude.ai in the browser rather than locally.",
+    example: "claude --remote \"Fix the login bug\"",
+    tip: null },
+
+  { cmd: "--teleport", desc: "Resume web session in local terminal", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude --teleport",
+    detail: "Pulls a web-based session into your local terminal.",
+    example: "claude --teleport",
+    tip: null },
+
+  { cmd: "--remote-control, --rc", desc: "Enable remote control from claude.ai", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude --remote-control \"My Project\"",
+    detail: "Starts an interactive session that can be controlled remotely from claude.ai in a browser.",
+    example: "claude --rc \"My Project\"",
+    tip: null },
+
+  { cmd: "--init", desc: "Run initialization hooks and start interactive mode", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude --init",
+    detail: "Runs any configured SessionStart hooks before entering the interactive session.",
+    example: "claude --init",
+    tip: null },
+
+  { cmd: "--init-only", desc: "Run initialization hooks and exit", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude --init-only",
+    detail: "Runs initialization hooks only, then exits without starting a session. Useful for setup automation.",
+    example: "claude --init-only",
+    tip: null },
+
+  { cmd: "--ide", desc: "Auto-connect to IDE on startup", cat: "flag", section: "CLI Flags: Session", icon: "&#128640;",
+    syntax: "claude --ide",
+    detail: "Automatically connects to an available IDE (VS Code, JetBrains) when starting the session.",
+    example: "claude --ide",
+    tip: null },
+
+  // ══════════ CLI FLAGS: Model & Effort ══════════
+  { cmd: "--model", desc: "Set model for session (e.g. sonnet, opus)", cat: "flag", section: "CLI Flags: Model", icon: "&#129302;",
+    syntax: "claude --model <model-name>",
+    detail: "Sets which Claude model to use. Accepts full model names or shorthand aliases.",
+    example: "claude --model sonnet\nclaude --model claude-opus-4-6",
+    tip: "Shorthand aliases: sonnet, opus." },
+
+  { cmd: "--effort", desc: "Set effort level: low, medium, high, max", cat: "flag", section: "CLI Flags: Model", icon: "&#129302;",
+    syntax: "claude --effort <level>",
+    detail: "Controls processing depth. Higher effort means more thorough analysis but slower and more expensive. Max is Opus only.",
+    example: "claude --effort high",
+    tip: "Use low for quick questions, max for complex architecture decisions." },
+
+  { cmd: "--fallback-model", desc: "Auto-fallback model when default is overloaded", cat: "flag", section: "CLI Flags: Model", icon: "&#129302;",
+    syntax: "claude -p --fallback-model <model> \"query\"",
+    detail: "Specifies a backup model to use automatically if the primary model is overloaded. Print mode only.",
+    example: "claude -p --fallback-model sonnet \"analyze this code\"",
+    tip: null },
+
+  // ══════════ CLI FLAGS: System Prompt ══════════
+  { cmd: "--system-prompt", desc: "Replace entire default system prompt", cat: "flag", section: "CLI Flags: System Prompt", icon: "&#128221;",
+    syntax: "claude --system-prompt \"<text>\"",
+    detail: "Completely replaces Claude's default system prompt with your custom text. Use for specialized behavior.",
+    example: "claude --system-prompt \"You are a Python expert. Only output Python code.\"",
+    tip: "Use --append-system-prompt instead if you want to keep the defaults." },
+
+  { cmd: "--system-prompt-file", desc: "Load system prompt from a file", cat: "flag", section: "CLI Flags: System Prompt", icon: "&#128221;",
+    syntax: "claude --system-prompt-file <path>",
+    detail: "Loads the system prompt from a file instead of inline text. Useful for long or complex prompts.",
+    example: "claude --system-prompt-file ./custom-prompt.txt",
+    tip: null },
+
+  { cmd: "--append-system-prompt", desc: "Append custom text to default system prompt", cat: "flag", section: "CLI Flags: System Prompt", icon: "&#128221;",
+    syntax: "claude --append-system-prompt \"<text>\"",
+    detail: "Adds your text to the end of Claude's default system prompt. Keeps all default behavior while adding constraints.",
+    example: "claude --append-system-prompt \"Always use TypeScript. Never use eval().\"",
+    tip: "Preferred over --system-prompt when you want to keep Claude's defaults." },
+
+  { cmd: "--append-system-prompt-file", desc: "Append file contents to default system prompt", cat: "flag", section: "CLI Flags: System Prompt", icon: "&#128221;",
+    syntax: "claude --append-system-prompt-file <path>",
+    detail: "Appends the contents of a file to Claude's default system prompt.",
+    example: "claude --append-system-prompt-file ./style-rules.txt",
+    tip: null },
+
+  // ══════════ CLI FLAGS: Permissions ══════════
+  { cmd: "--permission-mode", desc: "Begin in specified mode: plan, auto, etc.", cat: "flag", section: "CLI Flags: Permissions", icon: "&#128737;",
+    syntax: "claude --permission-mode <mode>",
+    detail: "Sets the initial permission mode. Plan mode requires approval before execution. Auto mode approves everything automatically.",
+    example: "claude --permission-mode plan",
+    tip: null },
+
+  { cmd: "--dangerously-skip-permissions", desc: "Skip ALL permission prompts — use with extreme caution!", cat: "flag", section: "CLI Flags: Permissions", icon: "&#128737;",
+    syntax: "claude --dangerously-skip-permissions",
+    detail: "Bypasses all permission prompts. Claude will execute any action without asking. Only use in isolated/sandboxed environments.",
+    example: "claude -p --dangerously-skip-permissions \"build the project\"",
+    tip: "DANGEROUS: Only use in Docker containers or CI environments where damage is contained." },
+
+  { cmd: "--allowedTools", desc: "Tools that execute without prompting", cat: "flag", section: "CLI Flags: Permissions", icon: "&#128737;",
+    syntax: "claude --allowedTools \"<pattern>\" \"<pattern>\"",
+    detail: "Specifies tool patterns that are auto-approved without permission prompts. Uses permission rule syntax.",
+    example: "claude --allowedTools \"Bash(git log *)\" \"Read\"",
+    tip: "Useful for allowing safe read-only operations automatically." },
+
+  { cmd: "--disallowedTools", desc: "Tools removed from model's context entirely", cat: "flag", section: "CLI Flags: Permissions", icon: "&#128737;",
+    syntax: "claude --disallowedTools \"<pattern>\"",
+    detail: "Completely removes specified tools from Claude's awareness. Claude cannot use these tools at all.",
+    example: "claude --disallowedTools \"Bash(rm *)\" \"Edit\"",
+    tip: "Stronger than not allowing — Claude doesn't even know the tool exists." },
+
+  { cmd: "--tools", desc: "Restrict which built-in tools Claude can use", cat: "flag", section: "CLI Flags: Permissions", icon: "&#128737;",
+    syntax: "claude --tools \"Tool1,Tool2\"",
+    detail: "Whitelists specific tools. Only the listed tools will be available to Claude.",
+    example: "claude --tools \"Bash,Read\"",
+    tip: null },
+
+  // ══════════ CLI FLAGS: Config ══════════
+  { cmd: "--add-dir", desc: "Add additional working directories", cat: "flag", section: "CLI Flags: Config", icon: "&#128451;",
+    syntax: "claude --add-dir <paths>",
+    detail: "Adds extra directories to Claude's file access scope. Each path is validated to ensure it exists.",
+    example: "claude --add-dir ../apps ../lib",
+    tip: "Essential for monorepo setups." },
+
+  { cmd: "--mcp-config", desc: "Load MCP servers from JSON files", cat: "flag", section: "CLI Flags: Config", icon: "&#128451;",
+    syntax: "claude --mcp-config <files>",
+    detail: "Loads MCP server configurations from one or more JSON files. Space-separated for multiple files.",
+    example: "claude --mcp-config ./mcp.json",
+    tip: null },
+
+  { cmd: "--strict-mcp-config", desc: "Only use MCP servers from --mcp-config", cat: "flag", section: "CLI Flags: Config", icon: "&#128451;",
+    syntax: "claude --strict-mcp-config --mcp-config ./mcp.json",
+    detail: "Ignores all MCP configurations except those explicitly provided via --mcp-config. For locked-down environments.",
+    example: "claude --strict-mcp-config --mcp-config ./approved-mcps.json",
+    tip: null },
+
+  { cmd: "--plugin-dir", desc: "Load plugins from directory for this session", cat: "flag", section: "CLI Flags: Config", icon: "&#128451;",
+    syntax: "claude --plugin-dir <path>",
+    detail: "Loads plugins from a specified directory for this session only. Can be repeated for multiple directories.",
+    example: "claude --plugin-dir ./my-plugins --plugin-dir ./extras",
+    tip: null },
+
+  { cmd: "--disable-slash-commands", desc: "Disable all skills and commands", cat: "flag", section: "CLI Flags: Config", icon: "&#128451;",
+    syntax: "claude --disable-slash-commands",
+    detail: "Turns off all slash commands and skills for the session. Useful for restricted or minimal environments.",
+    example: "claude --disable-slash-commands",
+    tip: null },
+
+  { cmd: "--settings", desc: "Load additional settings from JSON", cat: "flag", section: "CLI Flags: Config", icon: "&#128451;",
+    syntax: "claude --settings <path-or-json>",
+    detail: "Loads additional settings from a JSON file path or inline JSON string.",
+    example: "claude --settings ./settings.json",
+    tip: null },
+
+  { cmd: "--setting-sources", desc: "Comma-separated list of setting sources", cat: "flag", section: "CLI Flags: Config", icon: "&#128451;",
+    syntax: "claude --setting-sources <sources>",
+    detail: "Controls which setting sources to load (e.g., user, project).",
+    example: "claude --setting-sources user,project",
+    tip: null },
+
+  // ══════════ CLI FLAGS: Chrome & Git ══════════
+  { cmd: "--chrome", desc: "Enable Chrome browser integration", cat: "flag", section: "CLI Flags: Chrome & Git", icon: "&#127760;",
+    syntax: "claude --chrome",
+    detail: "Enables Chrome browser automation so Claude can interact with web pages for testing and web automation tasks.",
+    example: "claude --chrome",
+    tip: null },
+
+  { cmd: "--no-chrome", desc: "Disable Chrome browser integration", cat: "flag", section: "CLI Flags: Chrome & Git", icon: "&#127760;",
+    syntax: "claude --no-chrome",
+    detail: "Explicitly disables Chrome integration for this session.",
+    example: "claude --no-chrome",
+    tip: null },
+
+  { cmd: "--worktree, -w", desc: "Start in isolated git worktree", cat: "flag", section: "CLI Flags: Chrome & Git", icon: "&#127760;",
+    syntax: "claude -w <name>",
+    detail: "Creates and works in an isolated git worktree at .claude/worktrees/<name>. Lets you work on separate branches without affecting your main working directory.",
+    example: "claude -w feature-auth",
+    tip: "Great for parallel feature development." },
+
+  { cmd: "--from-pr", desc: "Resume sessions linked to a specific GitHub PR", cat: "flag", section: "CLI Flags: Chrome & Git", icon: "&#127760;",
+    syntax: "claude --from-pr <PR-number>",
+    detail: "Loads sessions associated with a specific GitHub pull request by number or URL.",
+    example: "claude --from-pr 123",
+    tip: null },
+
+  // ══════════ CLI FLAGS: Output ══════════
+  { cmd: "--output-format", desc: "Output format: text, json, stream-json", cat: "flag", section: "CLI Flags: Output", icon: "&#128196;",
+    syntax: "claude -p --output-format <format> \"query\"",
+    detail: "Controls the output format in print mode. text is plain text, json returns structured JSON, stream-json streams JSON events.",
+    example: "claude -p --output-format json \"list all functions\"",
+    tip: "Use json for parsing in scripts, stream-json for real-time processing." },
+
+  { cmd: "--input-format", desc: "Input format: text or stream-json", cat: "flag", section: "CLI Flags: Output", icon: "&#128196;",
+    syntax: "claude -p --input-format <format>",
+    detail: "Specifies the format of input data in print mode.",
+    example: "claude -p --input-format stream-json",
+    tip: null },
+
+  { cmd: "--json-schema", desc: "Get validated JSON output matching a schema", cat: "flag", section: "CLI Flags: Output", icon: "&#128196;",
+    syntax: "claude -p --json-schema '<schema>' \"query\"",
+    detail: "Forces Claude to output validated JSON matching the provided JSON Schema. Print mode only.",
+    example: "claude -p --json-schema '{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"}}}' \"extract the author name\"",
+    tip: "Ensures structured, parseable output for automation." },
+
+  { cmd: "--include-partial-messages", desc: "Include partial streaming events", cat: "flag", section: "CLI Flags: Output", icon: "&#128196;",
+    syntax: "claude -p --output-format stream-json --include-partial-messages \"query\"",
+    detail: "When using stream-json output, includes partial/incomplete message events as they stream.",
+    example: "claude -p --output-format stream-json --include-partial-messages \"explain this\"",
+    tip: null },
+
+  // ══════════ CLI FLAGS: Limits ══════════
+  { cmd: "--max-budget-usd", desc: "Max dollar amount to spend before stopping", cat: "flag", section: "CLI Flags: Limits", icon: "&#128176;",
+    syntax: "claude -p --max-budget-usd <amount> \"query\"",
+    detail: "Sets a spending cap. Claude stops if API costs would exceed this amount. Print mode only.",
+    example: "claude -p --max-budget-usd 5.00 \"build the dashboard\"",
+    tip: "Essential for cost control in automated workflows." },
+
+  { cmd: "--max-turns", desc: "Limit number of agentic turns", cat: "flag", section: "CLI Flags: Limits", icon: "&#128176;",
+    syntax: "claude -p --max-turns <number> \"query\"",
+    detail: "Limits how many agentic turns Claude can take. Prevents runaway sessions. Print mode only.",
+    example: "claude -p --max-turns 5 \"implement the login form\"",
+    tip: null },
+
+  { cmd: "--teammate-mode", desc: "Agent team display: auto, in-process, or tmux", cat: "flag", section: "CLI Flags: Limits", icon: "&#128176;",
+    syntax: "claude --teammate-mode <mode>",
+    detail: "Controls how subagent teams are displayed: auto picks the best mode, in-process runs inline, tmux opens separate panes.",
+    example: "claude --teammate-mode tmux",
+    tip: null },
+
+  // ══════════ CLI FLAGS: Advanced ══════════
+  { cmd: "--agent", desc: "Specify agent for current session", cat: "flag", section: "CLI Flags: Advanced", icon: "&#128171;",
+    syntax: "claude --agent <agent-name>",
+    detail: "Uses a specific configured agent for this session.",
+    example: "claude --agent my-custom-agent",
+    tip: null },
+
+  { cmd: "--agents", desc: "Define custom subagents dynamically via JSON", cat: "flag", section: "CLI Flags: Advanced", icon: "&#128171;",
+    syntax: "claude --agents '<json>'",
+    detail: "Defines custom subagents on the fly using a JSON configuration string.",
+    example: "claude --agents '{\"reviewer\":{\"description\":\"Reviews code\",\"prompt\":\"Review for bugs\"}}'",
+    tip: null },
+
+  { cmd: "--debug", desc: "Enable debug mode with optional category filtering", cat: "flag", section: "CLI Flags: Advanced", icon: "&#128171;",
+    syntax: "claude --debug [\"category\"]",
+    detail: "Enables debug logging. Optionally filter by category to reduce noise.",
+    example: "claude --debug \"api,mcp\"",
+    tip: "Use ! prefix to exclude: --debug \"!statsig\"" },
+
+  { cmd: "--verbose", desc: "Enable verbose logging (full turn-by-turn)", cat: "flag", section: "CLI Flags: Advanced", icon: "&#128171;",
+    syntax: "claude --verbose",
+    detail: "Shows full turn-by-turn output including all tool calls and responses in detail.",
+    example: "claude --verbose",
+    tip: null },
+
+  { cmd: "--no-session-persistence", desc: "Disable session persistence (print mode)", cat: "flag", section: "CLI Flags: Advanced", icon: "&#128171;",
+    syntax: "claude -p --no-session-persistence \"query\"",
+    detail: "Prevents the session from being saved. The conversation is lost after it ends. Print mode only.",
+    example: "claude -p --no-session-persistence \"quick question\"",
+    tip: null },
+
+  { cmd: "--permission-prompt-tool", desc: "Specify MCP tool to handle permission prompts", cat: "flag", section: "CLI Flags: Advanced", icon: "&#128171;",
+    syntax: "claude -p --permission-prompt-tool <tool> \"query\"",
+    detail: "Delegates permission prompts to a specified MCP tool for non-interactive mode.",
+    example: "claude -p --permission-prompt-tool mcp_auth_tool \"query\"",
+    tip: null },
+
+  { cmd: "--betas", desc: "Beta headers for API requests", cat: "flag", section: "CLI Flags: Advanced", icon: "&#128171;",
+    syntax: "claude --betas <headers>",
+    detail: "Includes beta feature headers in API requests. For API key users only.",
+    example: "claude --betas interleaved-thinking",
+    tip: null },
+
+  { cmd: "--version, -v", desc: "Output current Claude Code version", cat: "flag", section: "CLI Flags: Advanced", icon: "&#128171;",
+    syntax: "claude -v",
+    detail: "Prints the installed Claude Code version number and exits.",
+    example: "claude -v",
+    tip: null },
+
+  { cmd: "--help, -h", desc: "Show CLI help information", cat: "flag", section: "CLI Flags: Advanced", icon: "&#128171;",
+    syntax: "claude -h",
+    detail: "Displays the full CLI help text with all available flags and their descriptions.",
+    example: "claude --help",
+    tip: null },
+
+  // ══════════ CLI COMMANDS ══════════
+  { cmd: "claude", desc: "Start an interactive session", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "claude",
+    detail: "Launches Claude Code in interactive mode in the current directory. This is the standard way to start a session.",
+    example: "cd my-project && claude",
+    tip: null },
+
+  { cmd: "claude \"query\"", desc: "Start interactive session with an initial prompt", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "claude \"your question or task\"",
+    detail: "Opens an interactive session and immediately sends your query as the first message.",
+    example: "claude \"explain this project structure\"",
+    tip: null },
+
+  { cmd: "cat file | claude -p", desc: "Process piped content in print mode", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "cat <file> | claude -p \"query\"",
+    detail: "Pipes file content into Claude via stdin. Claude processes the content with your query and exits.",
+    example: "cat error.log | claude -p \"explain these errors\"\ngit diff | claude -p \"review this diff\"",
+    tip: "Works with any command that outputs to stdout, not just cat." },
+
+  { cmd: "claude update", desc: "Update Claude Code to the latest version", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "claude update",
+    detail: "Downloads and installs the latest version of Claude Code.",
+    example: "claude update",
+    tip: "Check /release-notes after updating to see what's new." },
+
+  { cmd: "claude auth login", desc: "Sign in (supports --email and --sso)", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "claude auth login [--email <email>] [--sso]",
+    detail: "Authenticates with your Anthropic account from the command line. Supports SSO-based login.",
+    example: "claude auth login --email you@company.com --sso",
+    tip: null },
+
+  { cmd: "claude auth logout", desc: "Log out from Anthropic account", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "claude auth logout",
+    detail: "Signs out and clears stored credentials.",
+    example: "claude auth logout",
+    tip: null },
+
+  { cmd: "claude auth status", desc: "Show auth status (--text for readable)", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "claude auth status [--text]",
+    detail: "Displays authentication status as JSON. Add --text for human-readable output.",
+    example: "claude auth status --text",
+    tip: null },
+
+  { cmd: "claude agents", desc: "List all configured subagents by source", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "claude agents",
+    detail: "Shows all configured subagents, organized by their source (built-in, custom, plugin).",
+    example: "claude agents",
+    tip: null },
+
+  { cmd: "claude mcp", desc: "Configure MCP servers from the command line", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "claude mcp [add|remove|list] <server>",
+    detail: "Manage Model Context Protocol server configurations from the CLI.",
+    example: "claude mcp add my-server",
+    tip: "See official MCP documentation for detailed configuration." },
+
+  { cmd: "claude remote-control", desc: "Start Remote Control server mode", cat: "cli", section: "CLI Commands", icon: "&#9654;",
+    syntax: "claude remote-control [--name \"My Project\"]",
+    detail: "Starts a Remote Control server that can be accessed from claude.ai in a browser.",
+    example: "claude remote-control --name \"My Project\"",
+    tip: null },
+
+  // ══════════ VIM MODE ══════════
+  { cmd: "i / I / a / A", desc: "Enter INSERT mode at various positions", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "i (before cursor), I (line start), a (after cursor), A (line end)",
+    detail: "Four ways to enter INSERT mode from NORMAL mode. i inserts before cursor, I at line start, a after cursor, A at line end.",
+    example: "Press i to start typing at cursor, or A to jump to end of line and type",
+    tip: null },
+
+  { cmd: "o / O", desc: "Open new line below/above in INSERT mode", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "o (line below), O (line above)",
+    detail: "Creates a new line and enters INSERT mode. o opens below current line, O opens above.",
+    example: "Press o to create a new line below and start typing",
+    tip: null },
+
+  { cmd: "Esc", desc: "Return to NORMAL mode from INSERT", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "Esc",
+    detail: "Exits INSERT mode and returns to NORMAL mode where you can navigate and use editing commands.",
+    example: "Press Esc after typing to go back to NORMAL mode",
+    tip: null },
+
+  { cmd: "h j k l", desc: "Move left, down, up, right", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "h (left), j (down), k (up), l (right)",
+    detail: "Standard Vim directional movement in NORMAL mode. h=left, j=down, k=up, l=right.",
+    example: "Press l to move right, k to move up",
+    tip: null },
+
+  { cmd: "w / e / b", desc: "Next word / end of word / previous word", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "w (next word), e (end of word), b (previous word)",
+    detail: "Word-level navigation. w jumps to the start of the next word, e to the end of the current/next word, b to the start of the previous word.",
+    example: "Press w to skip forward word by word",
+    tip: null },
+
+  { cmd: "0 / $ / ^", desc: "Line start / end / first non-blank char", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "0 (line start), $ (line end), ^ (first non-blank)",
+    detail: "Line-level jumps. 0 goes to column 0, $ to the last character, ^ to the first non-whitespace character.",
+    example: "Press 0 to jump to line start, $ to jump to line end",
+    tip: "^ is useful for skipping indentation." },
+
+  { cmd: "gg / G", desc: "Go to beginning / end of entire input", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "gg (top), G (bottom)",
+    detail: "Document-level jumps. gg goes to the very beginning of all input, G goes to the very end.",
+    example: "Press gg to go to start, G to go to end",
+    tip: null },
+
+  { cmd: "f{c} / t{c}", desc: "Jump to / just before next occurrence of char", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "f{char} (to char), t{char} (before char), F/T (reverse)",
+    detail: "Character search. f jumps to the character, t jumps just before it. F and T do the same but search backward. Use ; to repeat, , to reverse.",
+    example: "Press f\" to jump to the next quote character",
+    tip: "Press ; to repeat the search, , to go in reverse." },
+
+  { cmd: "dd / D / dw", desc: "Delete line / to end / word", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "dd (whole line), D (to end), dw (word), de (end of word), db (back word)",
+    detail: "Delete operations. dd removes the entire line, D removes from cursor to line end, dw removes the next word.",
+    example: "Press dd to delete the current line, dw to delete next word",
+    tip: null },
+
+  { cmd: "cc / C / cw", desc: "Change line / to end / word", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "cc (whole line), C (to end), cw (word)",
+    detail: "Change operations — delete and enter INSERT mode. cc changes the entire line, C changes to end of line, cw changes the next word.",
+    example: "Press cw to delete a word and immediately start typing its replacement",
+    tip: "Change = delete + enter INSERT mode." },
+
+  { cmd: "yy / yw / p / P", desc: "Yank line / word, paste after / before", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "yy/Y (yank line), yw (yank word), p (paste after), P (paste before)",
+    detail: "Copy and paste. yy copies the entire line, yw copies a word. p pastes after cursor, P pastes before cursor.",
+    example: "Press yy to copy a line, then p to paste it below",
+    tip: null },
+
+  { cmd: ">> / <<", desc: "Indent / dedent line", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: ">> (indent right), << (indent left)",
+    detail: "Adjusts the indentation of the current line. >> adds indentation, << removes it.",
+    example: "Press >> to indent the current line right",
+    tip: null },
+
+  { cmd: ". (dot)", desc: "Repeat last change — super powerful!", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: ".",
+    detail: "Repeats whatever your last editing action was. One of the most powerful Vim commands — make a change once, then repeat it anywhere with a single keypress.",
+    example: "Press cw to change a word, then move to another word and press . to make the same change",
+    tip: "The secret to Vim efficiency: make a change, then . to repeat everywhere." },
+
+  { cmd: "iw / aw / i\" / i(", desc: "Text objects: inner/around word, quotes, parens", cat: "vim", section: "Vim Mode", icon: "&#128163;",
+    syntax: "iw (inner word), aw (around word), i\" (inner quotes), i( (inner parens), etc.",
+    detail: "Text objects for precise selections. Use with d (delete), c (change), or y (yank). 'Inner' selects just the content, 'around' includes delimiters/whitespace.",
+    example: "di\" deletes text inside quotes\nci( changes text inside parentheses\ndaw deletes a word plus surrounding space",
+    tip: "Also works with: i'/a' (single quotes), i[/a[ (brackets), i{/a{ (braces), iW/aW (WORD)." },
+];
+
+// ─── Category metadata ───
+const catMeta = {
+  slash:  { label: "Slash Commands", tagClass: "tag-slash", tagLabel: "SLASH" },
+  key:    { label: "Shortcuts",      tagClass: "tag-key",   tagLabel: "KEY" },
+  flag:   { label: "CLI Flags",      tagClass: "tag-flag",  tagLabel: "FLAG" },
+  cli:    { label: "CLI Commands",   tagClass: "tag-cli",   tagLabel: "CLI" },
+  vim:    { label: "Vim Mode",       tagClass: "tag-vim",   tagLabel: "VIM" },
+  prefix: { label: "Prefixes",       tagClass: "tag-prefix",tagLabel: "PREFIX" },
+};
+
+const categories = Object.keys(catMeta);
+let activeFilter = "all";
+let searchTerm = "";
+
+function init() {
+  updateStats();
+  buildFilterChips();
+  render();
+  setupSearch();
+  setupScrollTop();
+}
+
+function updateStats() {
+  const counts = { slash:0, key:0, flag:0, cli:0, vim:0, prefix:0 };
+  commands.forEach(c => counts[c.cat]++);
+  document.getElementById("totalCount").textContent = commands.length;
+  document.getElementById("slashCount").textContent = counts.slash;
+  document.getElementById("keyCount").textContent = counts.key + counts.vim + counts.prefix;
+  document.getElementById("flagCount").textContent = counts.flag + counts.cli;
+}
+
+function buildFilterChips() {
+  const container = document.getElementById("filterChips");
+  let html = '<div class="chip active" data-filter="all">All <span class="chip-count">'+commands.length+'</span></div>';
+  categories.forEach(cat => {
+    const count = commands.filter(c => c.cat === cat).length;
+    html += '<div class="chip" data-filter="'+cat+'">'+catMeta[cat].label+' <span class="chip-count">'+count+'</span></div>';
+  });
+  container.innerHTML = html;
+  container.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      container.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      activeFilter = chip.dataset.filter;
+      render();
+    });
+  });
+}
+
+function getFiltered() {
+  return commands.filter(c => {
+    const matchCat = activeFilter === "all" || c.cat === activeFilter;
+    const matchSearch = !searchTerm ||
+      c.cmd.toLowerCase().includes(searchTerm) ||
+      c.desc.toLowerCase().includes(searchTerm) ||
+      c.section.toLowerCase().includes(searchTerm) ||
+      (c.detail && c.detail.toLowerCase().includes(searchTerm)) ||
+      (c.syntax && c.syntax.toLowerCase().includes(searchTerm));
+    return matchCat && matchSearch;
+  });
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function highlightSearch(text) {
+  if (!searchTerm) return text;
+  const regex = new RegExp('(' + searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return text.replace(regex, '<mark style="background:rgba(232,115,74,0.3);color:var(--claude-peach);border-radius:2px;padding:0 2px;">$1</mark>');
+}
+
+function render() {
+  const filtered = getFiltered();
+  const container = document.getElementById("cardsContainer");
+  const noResults = document.getElementById("noResults");
+  const searchCount = document.getElementById("searchCount");
+
+  searchCount.textContent = searchTerm ? filtered.length + ' result' + (filtered.length !== 1 ? 's' : '') : '';
+
+  if (filtered.length === 0) { container.innerHTML = ''; noResults.classList.remove("hidden"); return; }
+  noResults.classList.add("hidden");
+
+  const sections = {};
+  filtered.forEach(c => { if (!sections[c.section]) sections[c.section] = []; sections[c.section].push(c); });
+
+  let html = '';
+  Object.entries(sections).forEach(([section, cmds]) => {
+    const icon = cmds[0].icon;
+    html += '<div class="section"><div class="section-header"><div class="section-icon">' + icon + '</div><div class="section-title">' + section + '</div><div class="section-count">' + cmds.length + ' command' + (cmds.length !== 1 ? 's' : '') + '</div></div><div class="cards-grid">';
+    cmds.forEach((c, idx) => {
+      const id = section.replace(/\s+/g,'-') + '-' + idx;
+      const exLines = c.example ? c.example.split('\n').map(l => escHtml(l)).join('\n') : '';
+      html += '<div class="card" data-id="' + id + '" onclick="toggleCard(this)"><div class="card-top"><span class="card-cmd">' + highlightSearch(escHtml(c.cmd)) + '</span><span class="card-tag ' + catMeta[c.cat].tagClass + '">' + catMeta[c.cat].tagLabel + '</span></div><div class="card-desc">' + highlightSearch(escHtml(c.desc)) + '</div><div class="card-expand-hint"><span class="arrow">&#9654;</span> Click for details & example</div>';
+      html += '<div class="card-detail"><div class="detail-divider"></div>';
+      html += '<div class="detail-section"><div class="detail-label">Syntax</div><div class="detail-code">' + escHtml(c.syntax || c.cmd) + '</div></div>';
+      html += '<div class="detail-section"><div class="detail-label">What it does</div><div class="detail-text">' + escHtml(c.detail || c.desc) + '</div></div>';
+      if (c.example) {
+        html += '<div class="detail-section"><div class="detail-label">Example</div><div class="detail-code">' + exLines + '</div></div>';
+      }
+      if (c.tip) {
+        html += '<div class="detail-tip">&#128161; ' + escHtml(c.tip) + '</div>';
+      }
+      html += '</div></div>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+function toggleCard(el) {
+  el.classList.toggle("expanded");
+}
+
+function setupSearch() {
+  const input = document.getElementById("searchInput");
+  input.addEventListener("input", (e) => { searchTerm = e.target.value.toLowerCase().trim(); render(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "/" && document.activeElement !== input) { e.preventDefault(); input.focus(); }
+    if (e.key === "Escape") { input.value = ""; searchTerm = ""; input.blur(); render(); }
+  });
+}
+
+function setupScrollTop() {
+  const btn = document.getElementById("scrollTop");
+  window.addEventListener("scroll", () => { btn.classList.toggle("visible", window.scrollY > 400); });
+  btn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: "smooth" }); });
+}
+
+init();
+</script>
+</body>
+</html>
